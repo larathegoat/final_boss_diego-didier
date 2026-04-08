@@ -1,23 +1,14 @@
-/* =========================================
-   TASKFLOW — app.js
-   Consume API REST, render Kanban, Drag & Drop
-   ========================================= */
-
 // URL base del servidor backend (API REST).
 // Todas las peticiones HTTP apuntarán a esta dirección.
 const API_URL = 'http://localhost:3000'
 
-// ──────────────────────────────────────────
 // ESTADO GLOBAL DE LA APLICACIÓN
-// ──────────────────────────────────────────
 
 let tasks = []          // Arreglo que almacena todas las tareas cargadas desde el servidor
 let draggedTaskId = null // ID de la tarea que el usuario está arrastrando en el tablero
 let taskToDelete = null  // ID de la tarea que está pendiente de confirmación para eliminar
 
-// ──────────────────────────────────────────
 // REFERENCIAS A ELEMENTOS DEL DOM
-// ──────────────────────────────────────────
 // Se obtienen aquí una sola vez para no buscarlos en el DOM cada que se necesitan
 
 const modalOverlay   = document.getElementById('modalOverlay')   // Overlay del modal "Nueva tarea"
@@ -30,9 +21,7 @@ const submitText     = document.getElementById('submitText')     // Texto dentro
 const submitSpinner  = document.getElementById('submitSpinner')  // Spinner de carga dentro del botón de crear
 const deleteTaskTitle = document.getElementById('deleteTaskTitle') // Span donde se muestra el nombre de la tarea a eliminar
 
-// ──────────────────────────────────────────
 // INICIALIZACIÓN
-// ──────────────────────────────────────────
 
 // Cuando el HTML termina de cargarse completamente, ejecuta estas dos acciones:
 document.addEventListener('DOMContentLoaded', () => {
@@ -40,9 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   bindEvents()  // 2. Registra todos los eventos de clic, teclado, etc.
 })
 
-// ──────────────────────────────────────────
 // LLAMADAS A LA API (comunicación con el servidor)
-// ──────────────────────────────────────────
 
 /**
  * Carga todas las tareas desde el endpoint GET /tasks.
@@ -109,9 +96,7 @@ async function deleteTask(id) {
   return data
 }
 
-// ──────────────────────────────────────────
 // RENDERIZADO DEL TABLERO
-// ──────────────────────────────────────────
 
 /**
  * Dibuja (o redibuja) todas las tarjetas en sus columnas correspondientes.
@@ -221,9 +206,7 @@ function createTaskCard(task) {
   return card
 }
 
-// ──────────────────────────────────────────
 // MANEJADORES DE DRAG & DROP (en las columnas)
-// ──────────────────────────────────────────
 
 /**
  * Se activa continuamente mientras una tarjeta es arrastrada sobre una columna.
@@ -284,9 +267,7 @@ async function handleDrop(e, newStatus) {
   }
 }
 
-// ──────────────────────────────────────────
 // MODAL: NUEVA TAREA
-// ──────────────────────────────────────────
 
 /**
  * Abre el modal de nueva tarea, limpia los campos y pone el foco en el título.
@@ -371,9 +352,7 @@ async function handleSubmit() {
   }
 }
 
-// ──────────────────────────────────────────
 // MODAL: ELIMINAR TAREA
-// ──────────────────────────────────────────
 
 /**
  * Abre el modal de confirmación de eliminación y muestra el nombre de la tarea.
@@ -414,9 +393,7 @@ async function handleDelete() {
   }
 }
 
-// ──────────────────────────────────────────
 // NOTIFICACIONES TOAST
-// ──────────────────────────────────────────
 
 /**
  * Muestra una notificación flotante ("toast") en la esquina inferior derecha.
@@ -452,9 +429,7 @@ function showToast(message, type = 'info') {
   }, 3500)
 }
 
-// ──────────────────────────────────────────
 // REGISTRO DE EVENTOS
-// ──────────────────────────────────────────
 
 /**
  * Registra todos los event listeners de la aplicación.
@@ -496,9 +471,7 @@ function bindEvents() {
   })
 }
 
-// ──────────────────────────────────────────
 // UTILIDADES
-// ──────────────────────────────────────────
 
 /**
  * Escapa caracteres especiales de HTML para prevenir ataques XSS (Cross-Site Scripting).
