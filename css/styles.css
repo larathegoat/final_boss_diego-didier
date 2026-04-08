@@ -1,87 +1,71 @@
-/* =========================================
-   TASKFLOW — CSS
-   Paleta pastel: lila + naranja sobre fondo oscuro
-   ========================================= */
-
-/* ── VARIABLES GLOBALES (Custom Properties) ────────────────
-   Se definen en :root para estar disponibles en todo el CSS.
-   Se usan con la función var(--nombre-variable).
-   ────────────────────────────────────────────────────────── */
 :root {
-  /* Colores de fondo (de más oscuro a más claro) */
-  --bg-base:        #18181f; /* Fondo principal de toda la página */
-  --bg-surface:     #1f1f2a; /* Fondo del header, footer y modales */
-  --bg-column:      #1c1c26; /* Fondo de las columnas del kanban */
-  --bg-card:        #242433; /* Fondo de las tarjetas de tarea */
-  --bg-card-hover:  #2a2a3d; /* Fondo de tarjeta al hacer hover */
+  /* Colores de fondo */
+  --bg-base:        #18181f;
+  --bg-surface:     #1f1f2a;
+  --bg-column:      #1c1c26;
+  --bg-card:        #242433;
+  --bg-card-hover:  #2a2a3d;
 
-  /* Paleta lila (color primario / To Do) */
-  --lila:           #c5b8f5;                    /* Color sólido principal */
-  --lila-mid:       #a895ee;                    /* Variante intermedia (bordes hover) */
-  --lila-dim:       rgba(197, 184, 245, 0.10);  /* Versión muy transparente (fondos sutiles) */
-  --lila-border:    rgba(197, 184, 245, 0.20);  /* Versión semitransparente (bordes) */
+  
+  --lila:           #c5b8f5;
+  --lila-mid:       #a895ee;
+  --lila-dim:       rgba(197, 184, 245, 0.10);
+  --lila-border:    rgba(197, 184, 245, 0.20);
 
-  /* Paleta naranja (color secundario / Doing) */
+  
   --naranja:        #f5c49a;
   --naranja-mid:    #eea870;
   --naranja-dim:    rgba(245, 196, 154, 0.10);
   --naranja-border: rgba(245, 196, 154, 0.20);
 
-  /* Colores de estado de las columnas */
-  --todo-color:     #c5b8f5;                    /* Lila — columna To Do */
+  
+  --todo-color:     #c5b8f5;
   --todo-bg:        rgba(197, 184, 245, 0.08);
-  --doing-color:    #f5c49a;                    /* Naranja — columna Doing */
+  --doing-color:    #f5c49a;
   --doing-bg:       rgba(245, 196, 154, 0.08);
-  --done-color:     #a8dba8;                    /* Verde suave — columna Done */
+  --done-color:     #a8dba8;
   --done-bg:        rgba(168, 219, 168, 0.08);
 
-  /* Colores de texto (jerarquía de importancia) */
-  --text-primary:   #e8e5f4; /* Texto principal (títulos, labels activos) */
-  --text-secondary: #9b94b8; /* Texto secundario (descripciones, labels inactivos) */
-  --text-muted:     #5c566e; /* Texto muy tenue (placeholders, IDs, metadatos) */
+  /* Colores de texto */
+  --text-primary:   #e8e5f4;
+  --text-secondary: #9b94b8;
+  --text-muted:     #5c566e;
 
   /* Bordes */
-  --border:         rgba(255, 255, 255, 0.06);  /* Borde sutil general */
-  --border-strong:  rgba(255, 255, 255, 0.10);  /* Borde más visible (modales, cards) */
+  --border:         rgba(255, 255, 255, 0.06);
+  --border-strong:  rgba(255, 255, 255, 0.10);
 
-  /* Radios de esquinas (usados para consistencia visual) */
-  --radius-sm:  8px;  /* Botones, inputs */
-  --radius-md:  12px; /* Tarjetas */
-  --radius-lg:  18px; /* Columnas */
-  --radius-xl:  24px; /* Modales */
+  /* Radios de esquinas */
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  18px;
+  --radius-xl:  24px;
 
   /* Tipografías */
-  --font-display: 'Geist Mono', monospace; /* Fuente monoespaciada para títulos, badges, IDs */
-  --font-body:    'DM Sans', sans-serif;   /* Fuente sans-serif para texto general */
+  --font-display: 'Geist Mono', monospace;
+  --font-body:    'DM Sans', sans-serif;
 
   /* Transición reutilizable: duración + curva de aceleración */
   --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── RESET BÁSICO ───────────────────────────────────────────
-   Elimina márgenes, paddings y usa border-box en todos los elementos
-   para que el padding no sume al tamaño total del elemento.
-   ────────────────────────────────────────────────────────── */
+/* Elimina márgenes, paddings y usa border-box en todos los elementos
+   para que el padding no sume al tamaño total del elemento.*/
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── BODY / HTML ────────────────────────────────────────────
-   Configura la página para ocupar al menos toda la ventana.
-   Usa flex column para que el footer quede siempre al fondo.
-   ────────────────────────────────────────────────────────── */
+/* Configura la página para ocupar al menos toda la ventana.
+   Usa flex column para que el footer quede siempre al fondo.*/
 html, body {
-  min-height: 100vh;          /* Ocupa al menos toda la altura de la ventana */
+  min-height: 100vh;
   background: var(--bg-base);
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.6;
   display: flex;
-  flex-direction: column;     /* Apila header → main → footer verticalmente */
+  flex-direction: column;
 }
 
-/* =========================================
-   HEADER (barra de navegación superior)
-   ========================================= */
 .app-header {
   background: var(--bg-surface);
   border-bottom: 1px solid var(--border);
@@ -89,11 +73,10 @@ html, body {
   height: 68px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Logo a la izquierda, botón a la derecha */
-  flex-shrink: 0; /* Evita que el header se encoja cuando el contenido crece */
+  justify-content: space-between;
+  flex-shrink: 0;
 }
 
-/* Contenedor del logo: ícono + textos */
 .brand {
   display: flex;
   align-items: center;
@@ -159,9 +142,7 @@ html, body {
   color: #d9d0fa;
 }
 
-/* =========================================
-   LAYOUT PRINCIPAL (el tablero)
-   ========================================= */
+/* LAYOUT PRINCIPAL (el tablero)*/
 
 /* Wrapper: ocupa el espacio restante entre header y footer */
 .board-wrapper {
@@ -182,9 +163,7 @@ html, body {
   align-items: start; /* Las columnas no se estiran verticalmente entre sí */
 }
 
-/* =========================================
-   COLUMNAS KANBAN
-   ========================================= */
+/*COLUMNAS KANBAN*/
 .kanban-column {
   background: var(--bg-column);
   border: 1px solid var(--border);
@@ -253,15 +232,13 @@ html, body {
 
 /* Estado visual cuando se está arrastrando una tarjeta sobre esta columna */
 .column-body.drag-over {
-  background: rgba(197, 184, 245, 0.04); /* Tinte lila muy sutil */
-  outline: 1px dashed var(--lila-border); /* Borde punteado para indicar zona de drop */
-  outline-offset: -6px; /* El borde punteado queda ligeramente hacia adentro */
+  background: rgba(197, 184, 245, 0.04); 
+  outline: 1px dashed var(--lila-border);
+  outline-offset: -6px;
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
 
-/* =========================================
-   ESTADO VACÍO (cuando no hay tareas en una columna)
-   ========================================= */
+/*ESTADO VACÍO (cuando no hay tareas en una columna)*/
 .empty-state {
   display: flex;
   flex-direction: column;
@@ -274,15 +251,13 @@ html, body {
   text-align: center;
 }
 
-.empty-state i { font-size: 1.4rem; opacity: 0.3; } /* Ícono grande y tenue */
-.empty-state p { margin: 0; opacity: 0.5; }         /* Texto semitransparente */
+.empty-state i { font-size: 1.4rem; opacity: 0.3; }
+.empty-state p { margin: 0; opacity: 0.5; }
 
 /* El JS agrega esta clase para ocultar el empty-state cuando hay tarjetas */
 .empty-state.hidden { display: none; }
 
-/* =========================================
-   TARJETAS DE TAREA
-   ========================================= */
+/* TARJETAS DE TAREA */
 .task-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -291,13 +266,13 @@ html, body {
   cursor: grab; /* Indica visualmente que se puede arrastrar */
   transition: var(--transition);
   animation: cardIn 0.22s cubic-bezier(0.34, 1.4, 0.64, 1); /* Animación de entrada "rebote" */
-  position: relative; /* Necesario para el pseudo-elemento ::before (barra lateral de color) */
+  position: relative;
 }
 
 /* Animación de entrada al aparecer una nueva tarjeta */
 @keyframes cardIn {
-  from { opacity: 0; transform: translateY(-8px) scale(0.97); } /* Empieza arriba y pequeña */
-  to   { opacity: 1; transform: translateY(0) scale(1); }       /* Termina en su posición normal */
+  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }  
 }
 
 /* Barra vertical de color en el lado izquierdo de cada tarjeta
@@ -364,7 +339,7 @@ html, body {
   display: flex;
   gap: 2px;
   flex-shrink: 0;
-  opacity: 0;                   /* Oculto normalmente */
+  opacity: 0;
   transition: opacity 0.15s;
 }
 
@@ -427,9 +402,7 @@ html, body {
   opacity: 0.4;
 }
 
-/* =========================================
-   FOOTER (barra inferior)
-   ========================================= */
+/* FOOTER (barra inferior)*/
 .app-footer {
   background: var(--bg-surface);
   border-top: 1px solid var(--border);
@@ -474,9 +447,7 @@ html, body {
 .footer-stat .dot-doing { background: var(--doing-color); }
 .footer-stat .dot-done  { background: var(--done-color); }
 
-/* =========================================
-   MODALES (ventanas emergentes)
-   ========================================= */
+/* MODALES (ventanas emergentes) */
 
 /* Fondo oscuro y borroso que cubre toda la pantalla cuando el modal está activo */
 .modal-overlay {
@@ -689,9 +660,7 @@ html, body {
   line-height: 1.65;
 }
 
-/* =========================================
-   NOTIFICACIONES TOAST
-   ========================================= */
+/*NOTIFICACIONES TOAST*/
 
 /* Contenedor fijo en la esquina inferior derecha;
    el JS inserta elementos .toast-item aquí dinámicamente */
@@ -722,9 +691,9 @@ html, body {
 }
 
 /* Borde izquierdo de color según el tipo */
-.toast-success { border-left: 3px solid var(--lila); }    /* Verde (lila) */
-.toast-error   { border-left: 3px solid #f08282; }        /* Rojo */
-.toast-info    { border-left: 3px solid var(--naranja); } /* Naranja */
+.toast-success { border-left: 3px solid var(--lila); }
+.toast-error   { border-left: 3px solid #f08282; }
+.toast-info    { border-left: 3px solid var(--naranja); } 
 
 /* Color del ícono según el tipo */
 .toast-success i { color: var(--lila); }
@@ -745,9 +714,7 @@ html, body {
   to { opacity: 0; transform: translateX(16px); }
 }
 
-/* =========================================
-   RESPONSIVE (adaptación a distintas pantallas)
-   ========================================= */
+/* RESPONSIVE (adaptación a distintas pantallas) */
 
 /* En pantallas de hasta 860px (tablets): una columna por fila */
 @media (max-width: 860px) {
