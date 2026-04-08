@@ -1,65 +1,86 @@
 /* =========================================
    TASKFLOW — CSS
-   Pastel lila + naranja sobre fondo oscuro
+   Paleta pastel: lila + naranja sobre fondo oscuro
    ========================================= */
 
+/* ── VARIABLES GLOBALES (Custom Properties) ────────────────
+   Se definen en :root para estar disponibles en todo el CSS.
+   Se usan con la función var(--nombre-variable).
+   ────────────────────────────────────────────────────────── */
 :root {
-  --bg-base:        #18181f;
-  --bg-surface:     #1f1f2a;
-  --bg-column:      #1c1c26;
-  --bg-card:        #242433;
-  --bg-card-hover:  #2a2a3d;
+  /* Colores de fondo (de más oscuro a más claro) */
+  --bg-base:        #18181f; /* Fondo principal de toda la página */
+  --bg-surface:     #1f1f2a; /* Fondo del header, footer y modales */
+  --bg-column:      #1c1c26; /* Fondo de las columnas del kanban */
+  --bg-card:        #242433; /* Fondo de las tarjetas de tarea */
+  --bg-card-hover:  #2a2a3d; /* Fondo de tarjeta al hacer hover */
 
-  --lila:           #c5b8f5;
-  --lila-mid:       #a895ee;
-  --lila-dim:       rgba(197, 184, 245, 0.10);
-  --lila-border:    rgba(197, 184, 245, 0.20);
+  /* Paleta lila (color primario / To Do) */
+  --lila:           #c5b8f5;                    /* Color sólido principal */
+  --lila-mid:       #a895ee;                    /* Variante intermedia (bordes hover) */
+  --lila-dim:       rgba(197, 184, 245, 0.10);  /* Versión muy transparente (fondos sutiles) */
+  --lila-border:    rgba(197, 184, 245, 0.20);  /* Versión semitransparente (bordes) */
 
+  /* Paleta naranja (color secundario / Doing) */
   --naranja:        #f5c49a;
   --naranja-mid:    #eea870;
   --naranja-dim:    rgba(245, 196, 154, 0.10);
   --naranja-border: rgba(245, 196, 154, 0.20);
 
-  --todo-color:     #c5b8f5;
+  /* Colores de estado de las columnas */
+  --todo-color:     #c5b8f5;                    /* Lila — columna To Do */
   --todo-bg:        rgba(197, 184, 245, 0.08);
-  --doing-color:    #f5c49a;
+  --doing-color:    #f5c49a;                    /* Naranja — columna Doing */
   --doing-bg:       rgba(245, 196, 154, 0.08);
-  --done-color:     #a8dba8;
+  --done-color:     #a8dba8;                    /* Verde suave — columna Done */
   --done-bg:        rgba(168, 219, 168, 0.08);
 
-  --text-primary:   #e8e5f4;
-  --text-secondary: #9b94b8;
-  --text-muted:     #5c566e;
+  /* Colores de texto (jerarquía de importancia) */
+  --text-primary:   #e8e5f4; /* Texto principal (títulos, labels activos) */
+  --text-secondary: #9b94b8; /* Texto secundario (descripciones, labels inactivos) */
+  --text-muted:     #5c566e; /* Texto muy tenue (placeholders, IDs, metadatos) */
 
-  --border:         rgba(255, 255, 255, 0.06);
-  --border-strong:  rgba(255, 255, 255, 0.10);
+  /* Bordes */
+  --border:         rgba(255, 255, 255, 0.06);  /* Borde sutil general */
+  --border-strong:  rgba(255, 255, 255, 0.10);  /* Borde más visible (modales, cards) */
 
-  --radius-sm:  8px;
-  --radius-md:  12px;
-  --radius-lg:  18px;
-  --radius-xl:  24px;
+  /* Radios de esquinas (usados para consistencia visual) */
+  --radius-sm:  8px;  /* Botones, inputs */
+  --radius-md:  12px; /* Tarjetas */
+  --radius-lg:  18px; /* Columnas */
+  --radius-xl:  24px; /* Modales */
 
-  --font-display: 'Geist Mono', monospace;
-  --font-body:    'DM Sans', sans-serif;
+  /* Tipografías */
+  --font-display: 'Geist Mono', monospace; /* Fuente monoespaciada para títulos, badges, IDs */
+  --font-body:    'DM Sans', sans-serif;   /* Fuente sans-serif para texto general */
 
+  /* Transición reutilizable: duración + curva de aceleración */
   --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ── RESET BÁSICO ───────────────────────────────────────────
+   Elimina márgenes, paddings y usa border-box en todos los elementos
+   para que el padding no sume al tamaño total del elemento.
+   ────────────────────────────────────────────────────────── */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ── BODY / HTML ────────────────────────────────────────────
+   Configura la página para ocupar al menos toda la ventana.
+   Usa flex column para que el footer quede siempre al fondo.
+   ────────────────────────────────────────────────────────── */
 html, body {
-  min-height: 100vh;
+  min-height: 100vh;          /* Ocupa al menos toda la altura de la ventana */
   background: var(--bg-base);
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.6;
   display: flex;
-  flex-direction: column;
+  flex-direction: column;     /* Apila header → main → footer verticalmente */
 }
 
 /* =========================================
-   HEADER
+   HEADER (barra de navegación superior)
    ========================================= */
 .app-header {
   background: var(--bg-surface);
@@ -68,16 +89,18 @@ html, body {
   height: 68px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
+  justify-content: space-between; /* Logo a la izquierda, botón a la derecha */
+  flex-shrink: 0; /* Evita que el header se encoja cuando el contenido crece */
 }
 
+/* Contenedor del logo: ícono + textos */
 .brand {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
+/* Cuadro con el ícono de kanban */
 .brand-icon {
   width: 36px;
   height: 36px;
@@ -91,8 +114,10 @@ html, body {
   font-size: 1rem;
 }
 
+/* Contenedor de nombre y subtítulo en columna */
 .brand-text { display: flex; flex-direction: column; gap: 1px; }
 
+/* "TaskFlow" — nombre principal en fuente monoespaciada */
 .brand-name {
   font-family: var(--font-display);
   font-size: 0.95rem;
@@ -102,6 +127,7 @@ html, body {
   line-height: 1;
 }
 
+/* "Gestor de tareas" — subtítulo pequeño debajo del nombre */
 .brand-sub {
   font-size: 0.65rem;
   color: var(--text-muted);
@@ -109,6 +135,7 @@ html, body {
   letter-spacing: 0.04em;
 }
 
+/* Botón "+ Nueva tarea" del header */
 .btn-new-task {
   display: flex;
   align-items: center;
@@ -125,6 +152,7 @@ html, body {
   transition: var(--transition);
 }
 
+/* Al pasar el cursor: más brillante y borde más visible */
 .btn-new-task:hover {
   background: rgba(197, 184, 245, 0.18);
   border-color: var(--lila-mid);
@@ -132,37 +160,41 @@ html, body {
 }
 
 /* =========================================
-   LAYOUT
+   LAYOUT PRINCIPAL (el tablero)
    ========================================= */
+
+/* Wrapper: ocupa el espacio restante entre header y footer */
 .board-wrapper {
-  flex: 1;
+  flex: 1; /* Crece para llenar el espacio disponible */
   display: flex;
   align-items: flex-start;
   justify-content: center;
   padding: 2.5rem 2rem;
 }
 
+/* Grid de 3 columnas iguales, con espacio máximo de 1100px */
 .board-grid {
   width: 100%;
   max-width: 1100px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas de igual ancho */
   gap: 1.5rem;
-  align-items: start;
+  align-items: start; /* Las columnas no se estiran verticalmente entre sí */
 }
 
 /* =========================================
-   COLUMNA
+   COLUMNAS KANBAN
    ========================================= */
 .kanban-column {
   background: var(--bg-column);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  overflow: hidden; /* Recorta los bordes redondeados en el contenido interior */
   display: flex;
   flex-direction: column;
 }
 
+/* Encabezado de la columna: punto de color + nombre + contador */
 .column-header {
   display: flex;
   align-items: center;
@@ -171,17 +203,20 @@ html, body {
   border-bottom: 1px solid var(--border);
 }
 
+/* Punto indicador de color del estado */
 .column-dot {
   width: 8px;
   height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
+  border-radius: 50%; /* Lo hace circular */
+  flex-shrink: 0;     /* Evita que se comprima */
 }
 
+/* Colores de los puntos según el estado */
 .dot-todo  { background: var(--todo-color); }
 .dot-doing { background: var(--doing-color); }
 .dot-done  { background: var(--done-color); }
 
+/* Título de la columna (TO DO, DOING, DONE) en mayúsculas */
 .column-title {
   font-family: var(--font-display);
   font-size: 0.68rem;
@@ -189,9 +224,10 @@ html, body {
   letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--text-secondary);
-  flex: 1;
+  flex: 1; /* Ocupa el espacio restante para empujar el contador a la derecha */
 }
 
+/* Badge numérico con el conteo de tareas en la columna */
 .column-count {
   font-family: var(--font-display);
   font-size: 0.65rem;
@@ -205,24 +241,26 @@ html, body {
   text-align: center;
 }
 
+/* Área de las tarjetas dentro de la columna */
 .column-body {
   padding: 1rem;
-  min-height: 220px;
+  min-height: 220px; /* Altura mínima para que las columnas vacías sean visibles y soltables */
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 10px; /* Espacio entre tarjetas */
   transition: background 0.15s ease;
 }
 
+/* Estado visual cuando se está arrastrando una tarjeta sobre esta columna */
 .column-body.drag-over {
-  background: rgba(197, 184, 245, 0.04);
-  outline: 1px dashed var(--lila-border);
-  outline-offset: -6px;
+  background: rgba(197, 184, 245, 0.04); /* Tinte lila muy sutil */
+  outline: 1px dashed var(--lila-border); /* Borde punteado para indicar zona de drop */
+  outline-offset: -6px; /* El borde punteado queda ligeramente hacia adentro */
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
 }
 
 /* =========================================
-   EMPTY STATE
+   ESTADO VACÍO (cuando no hay tareas en una columna)
    ========================================= */
 .empty-state {
   display: flex;
@@ -236,70 +274,81 @@ html, body {
   text-align: center;
 }
 
-.empty-state i { font-size: 1.4rem; opacity: 0.3; }
-.empty-state p { margin: 0; opacity: 0.5; }
+.empty-state i { font-size: 1.4rem; opacity: 0.3; } /* Ícono grande y tenue */
+.empty-state p { margin: 0; opacity: 0.5; }         /* Texto semitransparente */
+
+/* El JS agrega esta clase para ocultar el empty-state cuando hay tarjetas */
 .empty-state.hidden { display: none; }
 
 /* =========================================
-   TASK CARD
+   TARJETAS DE TAREA
    ========================================= */
 .task-card {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   padding: 1rem 1rem 0.875rem;
-  cursor: grab;
+  cursor: grab; /* Indica visualmente que se puede arrastrar */
   transition: var(--transition);
-  animation: cardIn 0.22s cubic-bezier(0.34, 1.4, 0.64, 1);
-  position: relative;
+  animation: cardIn 0.22s cubic-bezier(0.34, 1.4, 0.64, 1); /* Animación de entrada "rebote" */
+  position: relative; /* Necesario para el pseudo-elemento ::before (barra lateral de color) */
 }
 
+/* Animación de entrada al aparecer una nueva tarjeta */
 @keyframes cardIn {
-  from { opacity: 0; transform: translateY(-8px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+  from { opacity: 0; transform: translateY(-8px) scale(0.97); } /* Empieza arriba y pequeña */
+  to   { opacity: 1; transform: translateY(0) scale(1); }       /* Termina en su posición normal */
 }
 
+/* Barra vertical de color en el lado izquierdo de cada tarjeta
+   Indica visualmente a qué columna pertenece */
 .task-card::before {
   content: '';
   position: absolute;
-  left: 0; top: 12px; bottom: 12px;
+  left: 0; top: 12px; bottom: 12px; /* Altura de la barra (con margen superior e inferior) */
   width: 3px;
-  border-radius: 0 2px 2px 0;
+  border-radius: 0 2px 2px 0; /* Redondeado solo en el lado derecho de la barra */
 }
 
-.task-card[data-status="todo"]::before  { background: var(--todo-color); opacity: 0.6; }
+/* Color de la barra según el estado de la tarjeta (atributo data-status del JS) */
+.task-card[data-status="todo"]::before  { background: var(--todo-color);  opacity: 0.6; }
 .task-card[data-status="doing"]::before { background: var(--doing-color); opacity: 0.6; }
-.task-card[data-status="done"]::before  { background: var(--done-color); opacity: 0.5; }
+.task-card[data-status="done"]::before  { background: var(--done-color);  opacity: 0.5; }
 
+/* Al pasar el cursor: sube un poco y cambia el fondo */
 .task-card:hover {
   background: var(--bg-card-hover);
   border-color: var(--border-strong);
   transform: translateY(-2px);
 }
 
+/* Mientras se arrastra la tarjeta: se ve transparente y "apretada" */
 .task-card.dragging {
   opacity: 0.3;
-  cursor: grabbing;
+  cursor: grabbing; /* Cursor de "agarrando" mientras arrastra */
   transform: scale(0.97);
 }
 
+/* Parte superior de la tarjeta: título + botón de eliminar */
 .task-card-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 8px;
-  padding-left: 8px;
+  padding-left: 8px; /* Deja espacio visual para la barra de color izquierda */
 }
 
+/* Texto del título de la tarea */
 .task-title {
   font-weight: 500;
   font-size: 0.875rem;
   color: var(--text-primary);
   line-height: 1.45;
   flex: 1;
-  word-break: break-word;
+  word-break: break-word; /* Rompe palabras largas en vez de desbordar el contenedor */
 }
 
+/* Descripción opcional de la tarea */
 .task-desc {
   margin-top: 6px;
   padding-left: 8px;
@@ -309,16 +358,20 @@ html, body {
   word-break: break-word;
 }
 
+/* Contenedor de botones de acción (solo el de eliminar actualmente).
+   Invisible por defecto; aparece al hacer hover sobre la tarjeta. */
 .task-actions {
   display: flex;
   gap: 2px;
   flex-shrink: 0;
-  opacity: 0;
+  opacity: 0;                   /* Oculto normalmente */
   transition: opacity 0.15s;
 }
 
+/* Al hacer hover en la tarjeta, muestra los botones de acción */
 .task-card:hover .task-actions { opacity: 1; }
 
+/* Botón de ícono (cuadrado pequeño sin fondo visible) */
 .btn-icon {
   width: 26px;
   height: 26px;
@@ -334,18 +387,23 @@ html, body {
   transition: var(--transition);
 }
 
+/* Hover genérico de btn-icon: fondo sutil */
 .btn-icon:hover { background: var(--border); color: var(--text-primary); }
+
+/* Hover específico del botón eliminar: fondo y texto rojos */
 .btn-icon.btn-delete:hover { background: rgba(240, 130, 130, 0.12); color: #f08282; }
 
+/* Pie de la tarjeta: badge de estado + ID numérico */
 .task-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 10px;
   padding: 8px 8px 0;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid var(--border); /* Línea separadora */
 }
 
+/* Badge de estado (etiqueta de texto como "To Do", "Doing", "Done") */
 .status-badge {
   font-family: var(--font-display);
   font-size: 0.6rem;
@@ -353,13 +411,15 @@ html, body {
   letter-spacing: 0.07em;
   text-transform: uppercase;
   padding: 3px 8px;
-  border-radius: 20px;
+  border-radius: 20px; /* Píldora ovalada */
 }
 
+/* Colores de badge según el estado */
 .badge-todo  { color: var(--todo-color);  background: var(--todo-bg); }
 .badge-doing { color: var(--doing-color); background: var(--doing-bg); }
 .badge-done  { color: var(--done-color);  background: var(--done-bg); }
 
+/* ID numérico (#1, #2...) muy pequeño y casi invisible */
 .task-id {
   font-family: var(--font-display);
   font-size: 0.57rem;
@@ -368,7 +428,7 @@ html, body {
 }
 
 /* =========================================
-   FOOTER
+   FOOTER (barra inferior)
    ========================================= */
 .app-footer {
   background: var(--bg-surface);
@@ -377,10 +437,11 @@ html, body {
   height: 48px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Versión a la izq, estadísticas a la derecha */
   flex-shrink: 0;
 }
 
+/* "TaskFlow · v1.0.0" */
 .footer-left {
   font-size: 0.68rem;
   color: var(--text-muted);
@@ -388,12 +449,14 @@ html, body {
   letter-spacing: 0.03em;
 }
 
+/* Contenedor de los tres contadores (To Do, Doing, Done) */
 .footer-right {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
+/* Cada par "punto + etiqueta + número" */
 .footer-stat {
   font-family: var(--font-display);
   font-size: 0.65rem;
@@ -403,48 +466,59 @@ html, body {
   gap: 5px;
 }
 
+/* El número en cada stat tiene más contraste que el label */
 .footer-stat .stat-val { color: var(--text-secondary); font-weight: 600; }
+
+/* Colores de los puntos del footer (igual que los de las columnas) */
 .footer-stat .dot-todo  { background: var(--todo-color); }
 .footer-stat .dot-doing { background: var(--doing-color); }
 .footer-stat .dot-done  { background: var(--done-color); }
 
 /* =========================================
-   MODAL
+   MODALES (ventanas emergentes)
    ========================================= */
+
+/* Fondo oscuro y borroso que cubre toda la pantalla cuando el modal está activo */
 .modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(10, 10, 18, 0.75);
-  backdrop-filter: blur(8px);
-  z-index: 200;
+  position: fixed;        /* Fijo respecto a la ventana, no al documento */
+  inset: 0;               /* Shorthand para top:0, right:0, bottom:0, left:0 */
+  background: rgba(10, 10, 18, 0.75); /* Negro semitransparente */
+  backdrop-filter: blur(8px); /* Desenfoca el contenido detrás del overlay */
+  z-index: 200;           /* Por encima de todo lo demás */
   display: flex;
   align-items: center;
-  justify-content: center;
-  opacity: 0;
-  pointer-events: none;
+  justify-content: center; /* Centra la tarjeta del modal en la pantalla */
+  opacity: 0;              /* Invisible por defecto */
+  pointer-events: none;    /* No captura clics cuando está oculto */
   transition: opacity 0.2s ease;
 }
 
+/* Al agregar la clase 'active' (via JS), el overlay se hace visible e interactivo */
 .modal-overlay.active {
   opacity: 1;
-  pointer-events: all;
+  pointer-events: all; /* Vuelve a capturar clics */
 }
 
+/* Tarjeta blanca del modal (el recuadro con el formulario) */
 .modal-card {
   background: var(--bg-surface);
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-xl);
   width: 100%;
   max-width: 460px;
-  margin: 1rem;
-  transform: translateY(12px) scale(0.97);
-  transition: transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
+  margin: 1rem; /* Margen en pantallas pequeñas para no tocar los bordes */
+  transform: translateY(12px) scale(0.97); /* Empieza ligeramente abajo y pequeño */
+  transition: transform 0.25s cubic-bezier(0.34, 1.4, 0.64, 1); /* Animación "rebote" */
   overflow: hidden;
 }
 
+/* Al activar el overlay, la tarjeta sube a su posición normal con animación */
 .modal-overlay.active .modal-card { transform: translateY(0) scale(1); }
+
+/* Variante más pequeña para el modal de confirmación de eliminación */
 .modal-small { max-width: 380px; }
 
+/* Cabecera del modal: título + botón × */
 .modal-header-custom {
   display: flex;
   align-items: center;
@@ -453,6 +527,7 @@ html, body {
   border-bottom: 1px solid var(--border);
 }
 
+/* Título del modal en fuente monoespaciada */
 .modal-title-custom {
   font-family: var(--font-display);
   font-size: 0.875rem;
@@ -460,6 +535,7 @@ html, body {
   color: var(--text-primary);
 }
 
+/* Botón × de cerrar modal */
 .modal-close {
   width: 30px;
   height: 30px;
@@ -477,15 +553,18 @@ html, body {
 
 .modal-close:hover { background: var(--border); color: var(--text-primary); }
 
+/* Cuerpo del modal: área de los campos del formulario */
 .modal-body-custom {
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.25rem; /* Separación entre grupos de campos */
 }
 
+/* Grupo de campo: label + input/textarea + mensaje de error */
 .field-group { display: flex; flex-direction: column; gap: 7px; }
 
+/* Etiqueta del campo */
 .field-group label {
   font-size: 0.77rem;
   font-weight: 500;
@@ -493,8 +572,10 @@ html, body {
   letter-spacing: 0.02em;
 }
 
+/* Asterisco rojo que marca campos obligatorios */
 .required { color: #f08282; margin-left: 2px; }
 
+/* Estilos compartidos de inputs y textareas */
 .field-group input,
 .field-group textarea {
   background: var(--bg-card);
@@ -504,28 +585,33 @@ html, body {
   font-family: var(--font-body);
   font-size: 0.875rem;
   padding: 10px 12px;
-  outline: none;
-  resize: none;
+  outline: none;  /* Quita el outline nativo del navegador (se reemplaza con box-shadow) */
+  resize: none;   /* Impide que el textarea sea redimensionable por el usuario */
   transition: var(--transition);
   width: 100%;
 }
 
+/* Color del placeholder en inputs y textareas */
 .field-group input::placeholder,
 .field-group textarea::placeholder { color: var(--text-muted); }
 
+/* Al enfocar un campo: borde lila y resplandor suave */
 .field-group input:focus,
 .field-group textarea:focus {
   border-color: var(--lila-mid);
-  box-shadow: 0 0 0 3px var(--lila-dim);
+  box-shadow: 0 0 0 3px var(--lila-dim); /* "Glow" exterior de 3px */
 }
 
+/* Estado de error en el campo: borde y glow rojo */
 .field-group input.error {
   border-color: #f08282;
   box-shadow: 0 0 0 3px rgba(240, 130, 130, 0.10);
 }
 
+/* Mensaje de error debajo del campo */
 .field-error { font-size: 0.73rem; color: #f08282; min-height: 1em; }
 
+/* Pie del modal: botones alineados a la derecha */
 .modal-footer-custom {
   display: flex;
   align-items: center;
@@ -535,6 +621,7 @@ html, body {
   border-top: 1px solid var(--border);
 }
 
+/* Botón "Cancelar" (sin fondo) */
 .btn-cancel {
   padding: 8px 16px;
   background: transparent;
@@ -550,6 +637,7 @@ html, body {
 
 .btn-cancel:hover { background: var(--bg-card); color: var(--text-primary); }
 
+/* Botón "Crear tarea" (color lila) */
 .btn-submit {
   padding: 8px 20px;
   background: var(--lila-dim);
@@ -563,7 +651,7 @@ html, body {
   transition: var(--transition);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 8px; /* Espacio entre texto y spinner */
 }
 
 .btn-submit:hover {
@@ -572,8 +660,10 @@ html, body {
   color: #d9d0fa;
 }
 
+/* Estado deshabilitado mientras se carga (JS lo activa con setLoading) */
 .btn-submit:disabled { opacity: 0.45; cursor: not-allowed; }
 
+/* Botón "Eliminar" (color rojo) en el modal de confirmación */
 .btn-danger {
   padding: 8px 20px;
   background: rgba(240, 130, 130, 0.08);
@@ -592,6 +682,7 @@ html, body {
   border-color: rgba(240, 130, 130, 0.38);
 }
 
+/* Texto del mensaje de confirmación de eliminación */
 .delete-message {
   font-size: 0.85rem;
   color: var(--text-secondary);
@@ -599,18 +690,22 @@ html, body {
 }
 
 /* =========================================
-   TOAST
+   NOTIFICACIONES TOAST
    ========================================= */
+
+/* Contenedor fijo en la esquina inferior derecha;
+   el JS inserta elementos .toast-item aquí dinámicamente */
 #toastContainer {
   position: fixed;
   bottom: 1.5rem;
   right: 1.5rem;
-  z-index: 999;
+  z-index: 999; /* Por encima de los modales incluso */
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 8px; /* Espacio entre toasts apilados */
 }
 
+/* Cada notificación individual */
 .toast-item {
   display: flex;
   align-items: center;
@@ -623,38 +718,50 @@ html, body {
   color: var(--text-primary);
   min-width: 220px;
   max-width: 320px;
-  animation: toastIn 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
+  animation: toastIn 0.25s cubic-bezier(0.34, 1.4, 0.64, 1); /* Aparece deslizándose desde la derecha */
 }
 
-.toast-success { border-left: 3px solid var(--lila); }
-.toast-error   { border-left: 3px solid #f08282; }
-.toast-info    { border-left: 3px solid var(--naranja); }
+/* Borde izquierdo de color según el tipo */
+.toast-success { border-left: 3px solid var(--lila); }    /* Verde (lila) */
+.toast-error   { border-left: 3px solid #f08282; }        /* Rojo */
+.toast-info    { border-left: 3px solid var(--naranja); } /* Naranja */
 
+/* Color del ícono según el tipo */
 .toast-success i { color: var(--lila); }
 .toast-error   i { color: #f08282; }
 .toast-info    i { color: var(--naranja); }
 
+/* Animación de entrada: aparece deslizándose desde la derecha */
 @keyframes toastIn {
   from { opacity: 0; transform: translateX(16px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
-.toast-out { animation: toastOut 0.2s ease forwards; }
+/* Clase que el JS agrega para iniciar la animación de salida */
+.toast-out { animation: toastOut 0.2s ease forwards; } /* forwards: mantiene el estado final */
 
+/* Animación de salida: se desliza hacia la derecha y desaparece */
 @keyframes toastOut {
   to { opacity: 0; transform: translateX(16px); }
 }
 
 /* =========================================
-   RESPONSIVE
+   RESPONSIVE (adaptación a distintas pantallas)
    ========================================= */
+
+/* En pantallas de hasta 860px (tablets): una columna por fila */
 @media (max-width: 860px) {
-  .board-grid { grid-template-columns: 1fr; max-width: 480px; }
+  .board-grid {
+    grid-template-columns: 1fr; /* Una sola columna ocupa todo el ancho */
+    max-width: 480px;
+  }
   .board-wrapper { padding: 1.5rem 1rem; }
 }
 
+/* En pantallas muy pequeñas (móviles, hasta 480px):
+   Reduce el padding del header y oculta elementos secundarios */
 @media (max-width: 480px) {
   .app-header { padding: 0 1rem; }
-  .brand-sub { display: none; }
-  .footer-right { display: none; }
+  .brand-sub { display: none; }     /* Oculta el subtítulo "Gestor de tareas" */
+  .footer-right { display: none; } /* Oculta los contadores del footer */
 }
